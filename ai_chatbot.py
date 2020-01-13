@@ -26,8 +26,9 @@ for intent in data["intents"]:
     if intent["tag"] not in labels:
         labels.append(intent["tag"])
 
-words = [stemmer.stem(w.lower()) for w in words]
-words = sorted(set(words))
+words = [stemmer.stem(w.lower()) for w in words if w != "?"]
+words = sorted(list(set(words)))
+
 labels = sorted(labels)
 
 training = []
@@ -52,4 +53,6 @@ for x, doc in enumerate(docs_x):
     training.append(bag)
     output.append(output_row)
 
+training = np.array(training)
+output = np.array(output)
 
